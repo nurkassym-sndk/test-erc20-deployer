@@ -8,11 +8,11 @@ import { ERC20, ERC20__factory } from '../typechain-types';
 describe('Token contract', function () {
   let token: ERC20;
 
-  beforeEach(async () => {
-    const tokenName = process.env.TOKEN_NAME || 'DefaultToken';
-    const tokenSymbol = process.env.TOKEN_SYMBOL || 'DTK';
-    const tokenDecimals = parseInt(process.env.TOKEN_DECIMALS || '18', 10);
+  const tokenName = process.env.TOKEN_NAME || 'DefaultToken';
+  const tokenSymbol = process.env.TOKEN_SYMBOL || 'DTK';
+  const tokenDecimals = parseInt(process.env.TOKEN_DECIMALS || '18', 10);
 
+  beforeEach(async () => {
     const [owner] = await ethers.getSigners();
 
     token = await new ERC20__factory(owner).deploy(tokenName, tokenSymbol, tokenDecimals);
@@ -28,15 +28,15 @@ describe('Token contract', function () {
   });
 
   it('should have correct name', async () => {
-    expect(await token.name()).to.equal('NurkassToken');
+    expect(await token.name()).to.equal(tokenName);
   });
 
   it('should have correct symbol', async () => {
-    expect(await token.symbol()).to.equal('NUTK');
+    expect(await token.symbol()).to.equal(tokenSymbol);
   });
 
   it('should have correct decimals', async () => {
-    expect(await token.decimals()).to.equal(18);
+    expect(await token.decimals()).to.equal(tokenDecimals);
   });
 
   it('should have zero total supply after deployment', async () => {
